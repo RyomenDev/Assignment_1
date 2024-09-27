@@ -1,0 +1,17 @@
+import React from "react";
+import ProductList from "./components/ProductList";
+import SearchBar from "./components/SearchBar";
+import CategoryFilter from "./components/CategoryFilter";
+
+const App = () => {
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Product Store</h1>
+      <SearchBar />
+      <CategoryFilter />
+      <ProductList />
+    </div>
+  );
+};
+
+export default App;
