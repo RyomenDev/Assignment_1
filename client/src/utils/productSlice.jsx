@@ -79,6 +79,9 @@ const productSlice = createSlice({
     incrementSkip: (state) => {
       state.skip += 10; // Increase the skip value by 10 for next batch
     },
+    decrementSkip: (state) => {
+      state.skip -= 10; // Decrement skip by 10
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -117,5 +120,6 @@ export const {
   setCategory,
   clearSingleProduct,
   incrementSkip,
+  decrementSkip,
 } = productSlice.actions;
 export default productSlice.reducer;
