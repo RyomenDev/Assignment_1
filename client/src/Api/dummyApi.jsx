@@ -1,8 +1,9 @@
 import axios from "axios";
 
 // Base URL for the API
-const API_BASE_URL = import.meta.env.VITE_API__BASE_URL;
-const BASE_URL = `${API_BASE_URL}/products`;
+const BASE_URL = "https://dummyjson.com/products";
+// const API_BASE_URL = import.meta.env.VITE_API__BASE_URL;
+// const BASE_URL = `${API_BASE_URL}/products`;
 
 // Fetch products with pagination, sorting, and category filtering
 export const getAllProducts = async ({
