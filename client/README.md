@@ -16,17 +16,21 @@ Product Store is a React application that allows users to browse and search prod
 ## Functional Requirements
 
 1. **Product and Category Fetching**:
+
    - Uses the DummyJSON API to fetch products and categories.
    - Products are fetched in batches of 10 using pagination parameters.
 
 2. **Category Selection**:
+
    - Displays all categories fetched from the API.
    - Users can select a single category; the app displays products for that category or all categories if none is selected.
 
 3. **Batch Fetching**:
+
    - Products are loaded in increments (e.g., first 1-10, then 11-20) and displayed dynamically.
 
 4. **Search Functionality**:
+
    - Implements a search feature to filter products based on user input.
 
 5. **Limitations**:
@@ -35,12 +39,15 @@ Product Store is a React application that allows users to browse and search prod
 ## Technical Requirements
 
 1. **Functional Components**:
+
    - The app is built using only functional components, adhering to modern React best practices.
 
 2. **Redux State Management**:
+
    - Redux is used to store and retrieve product and category data, managing global state effectively.
 
 3. **Query Parameters**:
+
    - The selected category and search input are stored as query parameters for easy sharing and bookmarking of search results.
 
 4. **UI/UX**:
@@ -57,4 +64,7 @@ Product Store is a React application that allows users to browse and search prod
 1. Clone the repository:
    ```bash
    git clone <repository-url>
-   cd product-store
+   cd client
+   npm install
+   npm run dev
+   ```

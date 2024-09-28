@@ -57,5 +57,7 @@ Product Store is a React application that allows users to browse and search prod
 1. Clone the repository:
    ```bash
    git clone <repository-url>
-   cd product-store
+   cd client
+   npm install
+   npm run dev
    ```
