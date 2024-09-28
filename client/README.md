@@ -2,66 +2,67 @@
 
 ## Overview
 
-Product Store is a React application that allows users to browse and search products fetched from the [DummyJSON API](https://dummyjson.com). This project implements various features like category selection, infinite scrolling, and real-time search functionality, providing a seamless user experience.
+Product Store is a React application that allows users to browse, search, and filter products fetched from the [DummyJSON API](https://dummyjson.com). This project incorporates various features such as dynamic category selection, pagination, real-time search, and infinite scrolling to provide a seamless user experience.
 
 ## Features
 
-- **Dynamic Category Selection**: Users can view and select product categories. When a category is selected, only products from that category will be displayed.
-- **Infinite Scrolling**: The application fetches products in batches (10 at a time), enhancing loading performance and user experience by reducing initial load time.
-- **Search Functionality**: Users can search for products in real-time, with results updated instantly based on the input.
-- **Responsive Design**: Built with Tailwind CSS, the app is designed to be mobile-friendly and visually appealing.
-- **Redux State Management**: Utilizes Redux for managing product and category data, making it easy to scale and maintain state across the application.
-- **Query Parameter Management**: The app stores the selected category and search input as query parameters, allowing users to share links that retain their filters.
+- **Dynamic Category Selection**: Users can view and select product categories. Once a category is selected, only the products from that category will be displayed. If no category is selected, all products are shown.
+  
+- **Infinite Scrolling with Pagination**: The app fetches products in batches of 10, optimizing load performance by fetching more products only as needed while scrolling.
+  
+- **Real-Time Search**: The search functionality filters products in real time based on user input, providing immediate feedback and results.
+
+- **Responsive Design**: Built using Tailwind CSS, the app is mobile-friendly and ensures a consistent, visually appealing user interface across devices.
+
+- **Redux for State Management**: The application uses Redux to manage the global state of product and category data, ensuring easy scalability and maintainability.
+
+- **Persistent Query Parameters**: Selected categories and search queries are stored as query parameters, allowing users to share URLs that retain their filters.
 
 ## Functional Requirements
 
 1. **Product and Category Fetching**:
-
-   - Uses the DummyJSON API to fetch products and categories.
-   - Products are fetched in batches of 10 using pagination parameters.
+   - Fetches products and categories from the DummyJSON API.
+   - Products are fetched in batches of 10 using pagination parameters (`skip` and `limit`).
 
 2. **Category Selection**:
+   - Displays a list of categories fetched from the API.
+   - Allows users to filter products based on a selected category, or view all products if no category is selected.
 
-   - Displays all categories fetched from the API.
-   - Users can select a single category; the app displays products for that category or all categories if none is selected.
-
-3. **Batch Fetching**:
-
-   - Products are loaded in increments (e.g., first 1-10, then 11-20) and displayed dynamically.
+3. **Pagination and Infinite Scrolling**:
+   - Products are fetched and displayed incrementally (e.g., 1-10, then 11-20, and so on), reducing the initial load time and improving performance.
 
 4. **Search Functionality**:
-
-   - Implements a search feature to filter products based on user input.
+   - Provides real-time search, allowing users to search for products based on input keywords. The product list updates dynamically as the user types.
 
 5. **Limitations**:
-   - Note any limitations in `App.js` as comments (e.g., API rate limits, search constraints, or UI responsiveness issues).
+   - Any known limitations, such as API rate limits or UI responsiveness issues, are noted in `App.js` as comments.
 
 ## Technical Requirements
 
-1. **Functional Components**:
+1. **React Functional Components**:
+   - The application is built entirely using functional components, adhering to modern React best practices and hooks.
 
-   - The app is built using only functional components, adhering to modern React best practices.
+2. **Redux for Global State Management**:
+   - Redux is used to store product and category data, facilitating efficient and scalable state management across the app.
 
-2. **Redux State Management**:
+3. **Query Parameter Management**:
+   - Selected categories and search inputs are saved as query parameters, enabling users to share or bookmark URLs with their filters applied.
 
-   - Redux is used to store and retrieve product and category data, managing global state effectively.
-
-3. **Query Parameters**:
-
-   - The selected category and search input are stored as query parameters for easy sharing and bookmarking of search results.
-
-4. **UI/UX**:
-   - The application features a clean and responsive design using Tailwind CSS for styling.
+4. **User Interface and Experience (UI/UX)**:
+   - The design is clean and responsive, utilizing Tailwind CSS to ensure a consistent look across various screen sizes and devices.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js and npm installed on your machine.
+Before running the project, ensure you have the following installed on your machine:
+- Node.js (v14 or above)
+- npm (v6 or above)
 
 ### Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/RyomenDev/Assignment_1.git
    cd client
