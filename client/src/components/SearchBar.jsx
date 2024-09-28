@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { searchProducts } from "../utils/productSlice.js";
+import { searchProducts } from "../utils/productSlice";
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
@@ -14,7 +14,7 @@ const SearchBar = () => {
   };
 
   return (
-    <form onSubmit={handleSearch} className="flex mb-4">
+    <form onSubmit={handleSearch} className="flex mb-4 justify-center">
       <input
         type="text"
         value={query}

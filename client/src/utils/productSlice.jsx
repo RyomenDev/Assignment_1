@@ -1,16 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import {
+  getAllProducts,
+  getSingleProduct,
+  searchProductsApi,
+  getCategories,
+  getProductsByCategory,
+} from "../Api/dummyApi.jsx";
 
-// Async action to fetch all products with optional limit and skip for pagination
+// Async action to fetch products with pagination (limit and skip for infinite scroll)
 export const fetchAllProducts = createAsyncThunk(
   "products/fetchAllProducts",
-  async ({ limit = 30, skip = 0, sortBy = "", order = "" }) => {
-    const response = await axios.get(
-      `https://dummyjson.com/products?limit=${limit}&skip=${skip}${
-        sortBy ? `&sortBy=${sortBy}&order=${order}` : ""
-      }`
-    );
-    return response.data.products;
+  async ({ limit = 10, skip = 0, sortBy = "", order = "", category = "" }) => {
+    return await getAllProducts({ limit, skip, sortBy, order, category });
   }
 );
 
@@ -18,8 +19,7 @@ export const fetchAllProducts = createAsyncThunk(
 export const fetchSingleProduct = createAsyncThunk(
   "products/fetchSingleProduct",
   async (id) => {
-    const response = await axios.get(`https://dummyjson.com/products/${id}`);
-    return response.data;
+    return await getSingleProduct(id);
   }
 );
 
@@ -27,10 +27,7 @@ export const fetchSingleProduct = createAsyncThunk(
 export const searchProducts = createAsyncThunk(
   "products/searchProducts",
   async (query) => {
-    const response = await axios.get(
-      `https://dummyjson.com/products/search?q=${query}`
-    );
-    return response.data.products;
+    return await searchProductsApi(query);
   }
 );
 
@@ -38,10 +35,7 @@ export const searchProducts = createAsyncThunk(
 export const fetchCategories = createAsyncThunk(
   "products/fetchCategories",
   async () => {
-    const response = await axios.get(
-      "https://dummyjson.com/products/categories"
-    );
-    return response.data;
+    return await getCategories();
   }
 );
 
@@ -49,13 +43,11 @@ export const fetchCategories = createAsyncThunk(
 export const fetchProductsByCategory = createAsyncThunk(
   "products/fetchProductsByCategory",
   async (category) => {
-    const response = await axios.get(
-      `https://dummyjson.com/products/category/${category}`
-    );
-    return response.data.products;
+    return await getProductsByCategory(category);
   }
 );
 
+// Slice for managing products state
 const productSlice = createSlice({
   name: "products",
   initialState: {
@@ -65,16 +57,27 @@ const productSlice = createSlice({
     searchQuery: "",
     selectedCategory: "",
     singleProduct: null, // To store a single product fetched
+    skip: 0, // Track the number of products fetched (pagination)
+    hasMore: true, // To track if there are more products to load
   },
   reducers: {
     setSearchQuery: (state, action) => {
       state.searchQuery = action.payload;
+      state.items = []; // Clear products on new search
+      state.skip = 0; // Reset pagination on search
+      state.hasMore = true; // Reset hasMore on search
     },
     setCategory: (state, action) => {
       state.selectedCategory = action.payload;
+      state.items = []; // Reset products when category changes
+      state.skip = 0; // Reset pagination on category change
+      state.hasMore = true; // Reset hasMore on category change
     },
     clearSingleProduct: (state) => {
       state.singleProduct = null; // Clear single product data
+    },
+    incrementSkip: (state) => {
+      state.skip += 10; // Increase the skip value by 10 for next batch
     },
   },
   extraReducers: (builder) => {
@@ -84,7 +87,10 @@ const productSlice = createSlice({
       })
       .addCase(fetchAllProducts.fulfilled, (state, action) => {
         state.status = "success";
-        state.items = action.payload; // Store all fetched products
+        if (action.payload.length < 10) {
+          state.hasMore = false; // No more products to load
+        }
+        state.items = [...state.items, ...action.payload]; // Append new products to the list
       })
       .addCase(fetchAllProducts.rejected, (state) => {
         state.status = "failed";
@@ -94,16 +100,22 @@ const productSlice = createSlice({
       })
       .addCase(searchProducts.fulfilled, (state, action) => {
         state.items = action.payload; // Update items with search results
+        state.hasMore = false; // Stop further loading after search
       })
       .addCase(fetchCategories.fulfilled, (state, action) => {
         state.categories = action.payload; // Store fetched categories
       })
       .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
         state.items = action.payload; // Update items with category-specific products
+        state.hasMore = false; // Stop further loading for category filter
       });
   },
 });
 
-export const { setSearchQuery, setCategory, clearSingleProduct } =
-  productSlice.actions;
+export const {
+  setSearchQuery,
+  setCategory,
+  clearSingleProduct,
+  incrementSkip,
+} = productSlice.actions;
 export default productSlice.reducer;
